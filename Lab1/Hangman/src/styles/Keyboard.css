@@ -1,0 +1,31 @@
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 600px;
+  margin: 1rem auto;
+}
+
+.key {
+  font-size: 1.1rem;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.key.guessed {
+  background-color: #69d06c;
+}
+
+.key.wrong {
+  background-color: #ea483d;
+
+}
+
+.key:disabled {
+  cursor: not-allowed;
+}
