@@ -1,22 +1,23 @@
 import React from 'react';
-import '../styles/Keyboard.css'; 
+import '../styles/Keyboard.css'; //
 
-const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''); //
 
-const Keyboard = ({ onLetterClick, guessedLetters, wrongLetters }) => {
+const Keyboard = ({ onLetterClick, guessedLetters, wrongLetters, isGameDisabled = false }) => {
   return (
     <div className="keyboard">
       {ALPHABET.map((letter) => {
         const isGuessed = guessedLetters.includes(letter);
         const isWrong = wrongLetters.includes(letter);
-        const isDisabled = isGuessed || isWrong;
+        
+        const isDisabled = isGameDisabled || isGuessed || isWrong;
 
         return (
           <button
             key={letter}
             className={`key ${isGuessed ? 'guessed' : ''} ${isWrong ? 'wrong' : ''}`}
             onClick={() => onLetterClick(letter)}
-            disabled={isDisabled}
+            disabled={isDisabled} 
           >
             {letter}
           </button>
