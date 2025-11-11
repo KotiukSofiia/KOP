@@ -1,55 +1,54 @@
 import React, { useState, useCallback } from 'react';
-import StartPage from './pages/StartPage';
-import GamePage from './pages/GamePage';
-import ResultsPage from './pages/ResultsPage';
+import StartPage from './pages/StartPage'; 
+import GamePage from './pages/GamePage'; 
+import SettingsPage from './pages/SettingsPage'; 
+import { useSettings } from './context/SettingsContext'; 
 
-const WORD_LIST = ['REACT', 'VITE', 'JAVASCRIPT', 'COMPONENT', 'HOOKS', 'STATE', 'FRONTEND', 'HANGMAN'];
+const EASY_WORDS = ['REACT', 'VITE', 'HOOKS', 'STATE', 'CSS', 'HTML'];
+const HARD_WORDS = ['JAVASCRIPT', 'COMPONENT', 'TYPESCRIPT', 'FRONTEND', 'HANGMAN', 'CONTEXT'];
 
-const getRandomWord = () => {
-  return WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)];
+const getRandomWord = (difficulty) => {
+  const list = difficulty === 'easy' ? EASY_WORDS : HARD_WORDS;
+  return list[Math.floor(Math.random() * list.length)];
 };
 
 function App() {
   const [currentPage, setCurrentPage] = useState('start'); 
-  const [gameResult, setGameResult] = useState(null); 
   
-  const [wordToGuess, setWordToGuess] = useState(getRandomWord());
+  const { difficulty } = useSettings(); 
+  
+  const [wordToGuess, setWordToGuess] = useState(() => getRandomWord(difficulty)); 
 
   const handleStartGame = useCallback(() => {
-    setWordToGuess(getRandomWord()); 
-    console.log('The game has begun!');
+    setWordToGuess(getRandomWord(difficulty)); 
     setCurrentPage('game');
-    setGameResult(null);
+  }, [difficulty]); 
+
+  const handleGoToMenu = useCallback(() => {
+    setCurrentPage('start');
   }, []); 
 
-  const handleGameEnd = useCallback((isWin) => {
-    console.log('Game over. Victory:', isWin);
-    setGameResult(isWin);
-    setCurrentPage('results');
-  }, []);
-
-  const handlePlayAgain = useCallback(() => {
-    console.log('Play Again!');
-    setCurrentPage('start');
+  const handleGoToSettings = useCallback(() => {
+    setCurrentPage('settings');
   }, []);
 
   const renderPage = () => {
     switch (currentPage) {
       case 'start':
-        return <StartPage onStartGame={handleStartGame} />;
+        return <StartPage 
+                 onStartGame={handleStartGame} 
+                 onGoToSettings={handleGoToSettings} 
+               />;
       
       case 'game':
         return <GamePage 
-                 onGameEnd={handleGameEnd} 
-                 wordToGuess={wordToGuess} 
+                 wordToGuess={wordToGuess}
+                 onNewGame={handleStartGame} 
+                 onGoToMenu={handleGoToMenu}  
                />;
       
-      case 'results':
-        return <ResultsPage 
-                 isWin={gameResult} 
-                 onPlayAgain={handlePlayAgain} 
-                 wordToGuess={wordToGuess} 
-               />;
+      case 'settings':
+        return <SettingsPage onBack={handleGoToMenu} />;
       
       default:
         return <StartPage onStartGame={handleStartGame} />;

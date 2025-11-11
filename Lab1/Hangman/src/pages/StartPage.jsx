@@ -1,13 +1,16 @@
 import React from 'react';
-import HangmanVisual from '../components/HangmanVisual'; 
+import HangmanVisual from '../components/HangmanVisual'; //
 
-const StartPage = ({ onStartGame }) => {
+// Приймаємо новий prop onGoToSettings
+const StartPage = ({ onStartGame, onGoToSettings }) => {
   return (
     <div className="start-page">
       <h1>HANGMAN</h1>      
-      <HangmanVisual mistakesCount={6} animateStartPage={true} />
+      <HangmanVisual mistakesCount={6} animateStartPage={true} /> 
       <p>Click to start!</p>
       <button onClick={onStartGame}>Start</button>
+      {/* Нова кнопка */}
+      <button onClick={onGoToSettings} style={{backgroundColor: '#6c757d'}}>Settings</button>
     </div>
   );
 };
