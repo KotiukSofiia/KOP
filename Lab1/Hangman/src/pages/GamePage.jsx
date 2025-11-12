@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'; // <-- Додай useState
-import { useHangman } from '../hooks/useHangman'; //
-import HangmanVisual from '../components/HangmanVisual'; //
-import WordDisplay from '../components/WordDisplay'; //
-import Keyboard from '../components/Keyboard'; //
-import ResultsModal from '../components/ResultsModal'; // <-- Імпорт модалки
+import React, { useEffect, useState } from 'react'; 
+import { useHangman } from '../hooks/useHangman'; 
+import HangmanVisual from '../components/HangmanVisual'; 
+import WordDisplay from '../components/WordDisplay'; 
+import Keyboard from '../components/Keyboard'; 
+import ResultsModal from '../components/ResultsModal'; 
 
-// 1. Приймаємо нові props від App.jsx
 const GamePage = ({ wordToGuess, onNewGame, onGoToMenu }) => {
   
   const {
@@ -15,32 +14,28 @@ const GamePage = ({ wordToGuess, onNewGame, onGoToMenu }) => {
     isGameWon,
     isGameLost,
     guessLetter, 
-  } = useHangman(wordToGuess); //
+  } = useHangman(wordToGuess); 
   
-  // 2. Стан для контролю видимості модалки
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 3. Змінюємо useEffect, щоб він показував модалку, а не навігував
+
   useEffect(() => {
-    // Не робимо нічого, якщо гра не завершена
     if (!isGameWon && !isGameLost) {
-      setIsModalOpen(false); // Ховаємо модалку, якщо почалася нова гра
+      setIsModalOpen(false); 
       return;
     }
     
-    // Встановлюємо затримку, щоб гравець побачив анімацію поразки
     const timer = setTimeout(() => {
-      setIsModalOpen(true); // Показуємо модалку
-    }, isGameWon ? 1000 : 3000); // 1с для перемоги, 3с для поразки
+      setIsModalOpen(true); 
+    }, isGameWon ? 1000 : 3000); 
 
     return () => clearTimeout(timer);
     
-  }, [isGameWon, isGameLost]); // (адаптовано)
+  }, [isGameWon, isGameLost]); 
 
-  // 4. Функції, які ми передамо в модалку
   const handlePlayAgain = () => {
     setIsModalOpen(false);
-    onNewGame(); // Запускаємо нову гру (змінюємо слово)
+    onNewGame(); 
   }
 
   const handleGoToMenu = () => {

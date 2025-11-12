@@ -2,26 +2,23 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useSettings } from '../context/SettingsContext'; // Наш хук
+import { useSettings } from '../context/SettingsContext'; 
 
-// 1. Схема валідації Yup
 const schema = yup.object().shape({
   difficulty: yup.string().oneOf(['easy', 'hard']).required(),
 });
 
 const SettingsPage = ({ onBack }) => {
-  const { difficulty, setDifficulty } = useSettings(); // Отримуємо поточні налаштування
+  const { difficulty, setDifficulty } = useSettings(); 
 
-  // 2. Налаштування react-hook-form
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: { difficulty: difficulty } // Встановлюємо поточне значення
+    defaultValues: { difficulty: difficulty } 
   });
 
-  // 3. Обробник відправки форми
   const onSubmit = (data) => {
     setDifficulty(data.difficulty);
-    onBack(); // Повертаємось назад після збереження
+    onBack(); 
   };
 
   return (
