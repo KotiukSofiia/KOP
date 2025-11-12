@@ -1,7 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-// Стилі для модального вікна (можна винести в CSS)
 const modalStyles = {
   position: 'fixed',
   top: 0,
@@ -23,7 +22,6 @@ const modalContentStyles = {
   color: '#333',
 };
 
-// 1. Отримуємо DOM-елемент для порталу
 const modalRoot = document.getElementById('modal-root');
 
 const ResultsModal = ({ isWin, wordToGuess, onPlayAgain, onGoToMenu }) => {
@@ -38,14 +36,12 @@ const ResultsModal = ({ isWin, wordToGuess, onPlayAgain, onGoToMenu }) => {
         )}
         <p>The correct word was: <strong>{wordToGuess}</strong></p>
         
-        {/* Кнопки, як вимагалось у завданні */}
         <button onClick={onPlayAgain}>Play Again</button>
         <button onClick={onGoToMenu} style={{backgroundColor: '#6c757d'}}>Main Menu</button>
       </div>
     </div>
   );
 
-  // 2. Використовуємо createPortal
   return createPortal(content, modalRoot);
 };
 

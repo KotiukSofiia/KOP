@@ -1,7 +1,6 @@
 import React from 'react';
-import HangmanVisual from '../components/HangmanVisual'; //
+import HangmanVisual from '../components/HangmanVisual'; 
 
-// Приймаємо новий prop onGoToSettings
 const StartPage = ({ onStartGame, onGoToSettings }) => {
   return (
     <div className="start-page">
@@ -9,7 +8,6 @@ const StartPage = ({ onStartGame, onGoToSettings }) => {
       <HangmanVisual mistakesCount={6} animateStartPage={true} /> 
       <p>Click to start!</p>
       <button onClick={onStartGame}>Start</button>
-      {/* Нова кнопка */}
       <button onClick={onGoToSettings} style={{backgroundColor: '#6c757d'}}>Settings</button>
     </div>
   );
