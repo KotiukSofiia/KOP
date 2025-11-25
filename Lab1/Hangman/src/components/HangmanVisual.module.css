@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.svg {
+  stroke: #333;
+  stroke-width: 4;
+  fill: none;
+  stroke-linecap: round;
+  width: 250px;
+  height: 250px;
+}
+
+.text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  color: #333;
+}
+
+/* Анімації */
+@keyframes person-swing-slow {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(2deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes person-swing-fast {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.slowSwing {
+  transform-origin: 180px 80px; 
+  animation: person-swing-slow 4s ease-in-out infinite;
+}
+
+.fastSwing {
+  transform-origin: 180px 80px; 
+  animation: person-swing-fast 1.5s ease-in-out infinite;
+}
