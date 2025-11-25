@@ -1,0 +1,9 @@
+.appContainer {
+  width: 100%;
+  max-width: 800px;
+  padding: 2rem;
+  background-color: #ffffffe8;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
