@@ -1,11 +1,11 @@
-.word-display {
+.wordDisplay {
   display: flex;
   justify-content: center;
   gap: 10px;
   margin: 2rem 0;
 }
 
-.letter-placeholder {
+.letterPlaceholder {
   font-size: 2rem;
   font-weight: bold;
   width: 30px;

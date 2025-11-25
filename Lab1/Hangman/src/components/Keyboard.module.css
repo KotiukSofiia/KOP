@@ -15,15 +15,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid #999;
+  background-color: white;
+  color: black;
 }
 
-.key.guessed {
-  background-color: #69d06c;
+.guessed {
+  background-color: #69d06c !important;
+  color: white !important;  
 }
 
-.key.wrong {
-  background-color: #ea483d;
-
+.wrong {
+  background-color: #ea483d !important;
+  color: white !important;
 }
 
 .key:disabled {

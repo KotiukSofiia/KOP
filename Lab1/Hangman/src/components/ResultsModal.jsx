@@ -1,43 +1,32 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-
-const modalStyles = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 1000,
-};
-
-const modalContentStyles = {
-  background: 'white',
-  padding: '2rem 3rem',
-  borderRadius: '8px',
-  textAlign: 'center',
-  color: '#333',
-};
+import styles from './ResultsModal.module.css';
+import buttonStyles from '../styles/Button.module.css'; 
 
 const modalRoot = document.getElementById('modal-root');
 
 const ResultsModal = ({ isWin, wordToGuess, onPlayAgain, onGoToMenu }) => {
   
   const content = (
-    <div style={modalStyles}>
-      <div style={modalContentStyles}>
-        {isWin ? (
-          <h1>WIN!!!</h1>
-        ) : (
-          <h1>GAME OVER!</h1>
-        )}
-        <p>The correct word was: <strong>{wordToGuess}</strong></p>
+    <div className={styles.overlay}>
+      <div className={styles.content}>
+        <h1 className={styles.title}>
+          {isWin ? 'YOU WON! 🎉' : 'GAME OVER 💀'}
+        </h1>
         
-        <button onClick={onPlayAgain}>Play Again</button>
-        <button onClick={onGoToMenu} style={{backgroundColor: '#6c757d'}}>Main Menu</button>
+        <p className={styles.wordText}>
+          The correct word was: <strong>{wordToGuess}</strong>
+        </p>
+
+        <div className={styles.buttons}>
+          <button className={buttonStyles.primary} onClick={onPlayAgain}>
+            Play Again
+          </button>
+          <button className={buttonStyles.secondary} onClick={onGoToMenu}>
+            Main Menu
+          </button>
+        </div>
+
       </div>
     </div>
   );
