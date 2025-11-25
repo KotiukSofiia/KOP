@@ -1,11 +1,11 @@
 import React from 'react';
-import '../styles/WordDisplay.css'; 
+import styles from './WordDisplay.module.css';
 
 const WordDisplay = ({ wordToGuess, guessedLetters }) => {
   return (
-    <div className="word-display">
+    <div className={styles.wordDisplay}>
       {wordToGuess.split('').map((letter, index) => (
-        <span className="letter-placeholder" key={index}>
+        <span className={styles.letterPlaceholder} key={index}>
           {guessedLetters.includes(letter) ? letter : ''}
         </span>
       ))}

@@ -2,56 +2,72 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useSettings } from '../context/SettingsContext'; 
+import { useNavigate } from 'react-router-dom';
+import { useSettings } from '../context/SettingsContext';
+import styles from './SettingsPage.module.css';
+import buttonStyles from '../styles/Button.module.css';
 
 const schema = yup.object().shape({
   difficulty: yup.string().oneOf(['easy', 'hard']).required(),
 });
 
-const SettingsPage = ({ onBack }) => {
-  const { difficulty, setDifficulty } = useSettings(); 
+const SettingsPage = () => {
+  const { difficulty, setDifficulty } = useSettings();
+  const navigate = useNavigate(); 
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: { difficulty: difficulty } 
+    defaultValues: { difficulty },
   });
 
   const onSubmit = (data) => {
     setDifficulty(data.difficulty);
-    onBack(); 
+    navigate('/');
   };
 
   return (
-    <div className="settings-page">
-      <h1>Settings</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        
-        <div style={{ margin: '1rem 0', fontSize: '1.2rem' }}>
-          <label>Difficulty</label>
-          
-          <div style={{ margin: '0.5rem 0' }}>
-            <label style={{ marginRight: '1rem' }}>
-              <input 
-                type="radio" 
-                value="easy" 
-                {...register('difficulty')} 
-              /> Easy
+    <div className={styles.settingsPage}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Settings</h1>
+        <p className={styles.subtitle}>
+          Choose the difficulty level for your next game.
+        </p>
+      </header>
+
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <div className={styles.formGroup}>
+          <span className={styles.fieldLabel}>Difficulty</span>
+          <div className={styles.radioGroup}>
+            <label className={styles.radioOption}>
+              <input type="radio" value="easy" {...register('difficulty')} />
+              <span>Easy</span>
             </label>
-            
-            <label>
-              <input 
-                type="radio" 
-                value="hard" 
-                {...register('difficulty')} 
-              /> Hard
+            <label className={styles.radioOption}>
+              <input type="radio" value="hard" {...register('difficulty')} />
+              <span>Hard</span>
             </label>
           </div>
-          
-          {errors.difficulty && <p style={{color: 'red'}}>{errors.difficulty.message}</p>}
+          {errors.difficulty && (
+            <p className={styles.errorText}>{errors.difficulty.message}</p>
+          )}
         </div>
 
-        <button type="submit">Save</button>
-        <button type="button" onClick={onBack}>Back to Menu</button>
+        <div className={styles.buttonsRow}>
+          <button type="submit" className={buttonStyles.primary}>
+            Save
+          </button>
+          <button
+            type="button"
+            className={buttonStyles.secondary}
+            onClick={() => navigate('/')} 
+          >
+            Back to Menu
+          </button>
+        </div>
       </form>
     </div>
   );
