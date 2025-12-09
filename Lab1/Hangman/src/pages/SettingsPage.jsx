@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { useSettings } from '../context/SettingsContext';
+import { useGameStore } from '../store/useGameStore';
 import styles from './SettingsPage.module.css';
 import buttonStyles from '../styles/Button.module.css';
 
@@ -12,8 +12,8 @@ const schema = yup.object().shape({
 });
 
 const SettingsPage = () => {
-  const { difficulty, setDifficulty } = useSettings();
-  const navigate = useNavigate(); 
+  const { difficulty, setDifficulty } = useGameStore(); 
+  const navigate = useNavigate();
 
   const {
     register,
@@ -33,13 +33,11 @@ const SettingsPage = () => {
     <div className={styles.settingsPage}>
       <header className={styles.header}>
         <h1 className={styles.title}>Settings</h1>
-        <p className={styles.subtitle}>
-          Choose the difficulty level for your next game.
-        </p>
+        <p className={styles.subtitle}>Choose difficulty level</p>
       </header>
-
+      
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        <div className={styles.formGroup}>
+         <div className={styles.formGroup}>
           <span className={styles.fieldLabel}>Difficulty</span>
           <div className={styles.radioGroup}>
             <label className={styles.radioOption}>
@@ -51,22 +49,12 @@ const SettingsPage = () => {
               <span>Hard</span>
             </label>
           </div>
-          {errors.difficulty && (
-            <p className={styles.errorText}>{errors.difficulty.message}</p>
-          )}
+          {errors.difficulty && <p className={styles.errorText}>{errors.difficulty.message}</p>}
         </div>
 
         <div className={styles.buttonsRow}>
-          <button type="submit" className={buttonStyles.primary}>
-            Save
-          </button>
-          <button
-            type="button"
-            className={buttonStyles.secondary}
-            onClick={() => navigate('/')} 
-          >
-            Back to Menu
-          </button>
+          <button type="submit" className={buttonStyles.primary}>Save</button>
+          <button type="button" className={buttonStyles.secondary} onClick={() => navigate('/')}>Back</button>
         </div>
       </form>
     </div>

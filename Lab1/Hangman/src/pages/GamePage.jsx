@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; 
+import { useParams, useNavigate } from 'react-router-dom';
 import { useHangman } from '../hooks/useHangman';
-import { useSettings } from '../context/SettingsContext'; 
+import { useGameStore } from '../store/useGameStore';
 import HangmanVisual from '../components/HangmanVisual';
 import WordDisplay from '../components/WordDisplay';
 import Keyboard from '../components/Keyboard';
@@ -17,10 +17,12 @@ const getRandomWord = (difficulty) => {
 };
 
 const GamePage = () => {
-
-  const { userName } = useParams(); 
+  const { userName } = useParams();
   const navigate = useNavigate();
-  const { difficulty } = useSettings();
+  
+  // Zustand: беремо складність і функцію додавання результату
+  const difficulty = useGameStore((state) => state.difficulty);
+  const addGameResult = useGameStore((state) => state.addGameResult);
 
   const [wordToGuess, setWordToGuess] = useState(() => getRandomWord(difficulty));
 
@@ -39,27 +41,46 @@ const GamePage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Ефект завершення гри
   useEffect(() => {
     if (!isGameWon && !isGameLost) {
       setIsModalOpen(false);
       return;
     }
 
+    // --- ЗБЕРІГАЄМО РЕЗУЛЬТАТ В STORE ---
+    // Робимо це лише один раз, коли гра закінчилась
+    // Щоб не дублювати, можна додати перевірку або винести в окрему функцію.
+    // Але оскільки useEffect спрацює при зміні isGameWon/Lost, 
+    // нам треба переконатися, що ми не запишемо результат двічі під час рендеру.
+    // Найкраще це зробити в момент, коли ми відкриваємо модалку (через таймер).
+    
     const timer = setTimeout(() => {
       setIsModalOpen(true);
+      
+      // додавання запису в історію
+      addGameResult({
+        id: Date.now(), // унікальне id
+        playerName: userName,
+        date: new Date().toLocaleString(),
+        result: isGameWon ? 'Win' : 'Loss',
+        word: wordToGuess,
+        difficulty: difficulty
+      });
+      
     }, isGameWon ? 1000 : 3000);
 
     return () => clearTimeout(timer);
-  }, [isGameWon, isGameLost]);
+  }, [isGameWon, isGameLost]); 
 
   const handlePlayAgain = () => {
     setIsModalOpen(false);
-    handleNewGame(); 
+    handleNewGame();
   };
 
   const handleGoToMenu = () => {
     setIsModalOpen(false);
-    navigate('/'); 
+    navigate('/');
   };
 
   return (
@@ -72,28 +93,16 @@ const GamePage = () => {
           onGoToMenu={handleGoToMenu}
         />
       )}
-
       <h2 className={styles.greeting}>Good luck, {userName}!</h2>
-
       <h2 className={styles.title}>Try to guess the word!</h2>
-      <p className={styles.subtitle}>
-        Each wrong letter draws a new part of the hangman.
-      </p>
-
+      <p className={styles.subtitle}>Each wrong letter draws a new part.</p>
+      
       <div className={styles.visualSection}>
-        <HangmanVisual
-          mistakesCount={mistakesCount}
-          animateOnLoss={isGameLost}
-        />
+        <HangmanVisual mistakesCount={mistakesCount} animateOnLoss={isGameLost} />
       </div>
-
       <div className={styles.wordSection}>
-        <WordDisplay
-          wordToGuess={wordToGuess}
-          guessedLetters={guessedLetters}
-        />
+        <WordDisplay wordToGuess={wordToGuess} guessedLetters={guessedLetters} />
       </div>
-
       <div className={styles.keyboardSection}>
         <Keyboard
           onLetterClick={guessLetter}
