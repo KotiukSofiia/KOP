@@ -48,19 +48,13 @@ const StartPage = () => {
       <p className={pageStyles.hint}>Click “Start” to begin a new game.</p>
 
       <div className={pageStyles.buttonsRow}>
-        <button
-          className={buttonStyles.primary}
-          onClick={handleStartGame}
-        >
-          Start
-        </button>
-        <button
-          className={buttonStyles.secondary}
-          onClick={handleGoToSettings}
-        >
-          Settings
-        </button>
-      </div>
+    <button className={buttonStyles.primary} onClick={handleStartGame}>Start</button>
+    <button className={buttonStyles.secondary} onClick={handleGoToSettings}>Settings</button>
+  
+    <button className={buttonStyles.secondary} onClick={() => navigate('/leaderboard')}>
+    Leaderboard
+    </button>
+    </div>
     </div>
   );
 };

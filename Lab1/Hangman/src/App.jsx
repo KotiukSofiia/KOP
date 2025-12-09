@@ -4,6 +4,7 @@ import StartPage from './pages/StartPage';
 import GamePage from './pages/GamePage'; 
 import SettingsPage from './pages/SettingsPage'; 
 import styles from './App.module.css'; 
+import LeaderboardPage from './pages/LeaderboardPage';
 
 function App() {
 
@@ -11,6 +12,8 @@ function App() {
     <div className={styles.appContainer}>
       <Routes>
         <Route path="/" element={<StartPage />} />
+        
+        <Route path="/leaderboard" element={<LeaderboardPage />} />
         
         <Route path="/settings" element={<SettingsPage />} />
         
