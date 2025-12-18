@@ -3,17 +3,17 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { useGameStore } from '../store/useGameStore';
 import styles from './SettingsPage.module.css';
 import buttonStyles from '../styles/Button.module.css';
+import { useSettingsStore } from '../store/settings/useSettingsStore';
+
+const SettingsPage = () => {
+  const navigate = useNavigate();
+  const { difficulty, setDifficulty } = useSettingsStore();
 
 const schema = yup.object().shape({
   difficulty: yup.string().oneOf(['easy', 'hard']).required(),
 });
-
-const SettingsPage = () => {
-  const { difficulty, setDifficulty } = useGameStore(); 
-  const navigate = useNavigate();
 
   const {
     register,

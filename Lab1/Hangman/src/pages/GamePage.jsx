@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useHangman } from '../hooks/useHangman';
-import { useGameStore } from '../store/useGameStore';
 import HangmanVisual from '../components/HangmanVisual';
 import WordDisplay from '../components/WordDisplay';
 import Keyboard from '../components/Keyboard';
 import ResultsModal from '../components/ResultsModal';
 import styles from './GamePage.module.css';
+import { useSettingsStore } from '../store/settings/useSettingsStore';
+import { useResultsStore } from '../store/results/useResultsStore';
 
 const EASY_WORDS = ['REACT', 'VITE', 'HOOKS', 'STATE', 'CSS', 'HTML'];
 const HARD_WORDS = ['JAVASCRIPT', 'COMPONENT', 'TYPESCRIPT', 'FRONTEND', 'HANGMAN', 'CONTEXT'];
@@ -20,9 +21,9 @@ const GamePage = () => {
   const { userName } = useParams();
   const navigate = useNavigate();
   
-  // Zustand: беремо складність і функцію додавання результату
-  const difficulty = useGameStore((state) => state.difficulty);
-  const addGameResult = useGameStore((state) => state.addGameResult);
+  const difficulty = useSettingsStore((state) => state.difficulty);
+  
+  const addGameResult = useResultsStore((state) => state.addGameResult);
 
   const [wordToGuess, setWordToGuess] = useState(() => getRandomWord(difficulty));
 
@@ -41,26 +42,17 @@ const GamePage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Ефект завершення гри
   useEffect(() => {
     if (!isGameWon && !isGameLost) {
       setIsModalOpen(false);
       return;
     }
-
-    // --- ЗБЕРІГАЄМО РЕЗУЛЬТАТ В STORE ---
-    // Робимо це лише один раз, коли гра закінчилась
-    // Щоб не дублювати, можна додати перевірку або винести в окрему функцію.
-    // Але оскільки useEffect спрацює при зміні isGameWon/Lost, 
-    // нам треба переконатися, що ми не запишемо результат двічі під час рендеру.
-    // Найкраще це зробити в момент, коли ми відкриваємо модалку (через таймер).
     
     const timer = setTimeout(() => {
       setIsModalOpen(true);
       
-      // додавання запису в історію
       addGameResult({
-        id: Date.now(), // унікальне id
+        id: Date.now(), 
         playerName: userName,
         date: new Date().toLocaleString(),
         result: isGameWon ? 'Win' : 'Loss',

@@ -1,13 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGameStore } from '../store/useGameStore';
 import styles from './LeaderboardPage.module.css';
 import buttonStyles from '../styles/Button.module.css';
+import { useResultsStore } from '../store/results/useResultsStore';
 
 const LeaderboardPage = () => {
   const navigate = useNavigate();
-  const history = useGameStore((state) => state.history);
-  const clearHistory = useGameStore((state) => state.clearHistory);
+  const history = useResultsStore((state) => state.history);
+  const clearHistory = useResultsStore((state) => state.clearHistory);
 
   return (
     <div className={styles.container}>
