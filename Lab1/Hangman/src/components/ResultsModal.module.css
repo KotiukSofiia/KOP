@@ -1,47 +1,37 @@
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  backdrop-filter: blur(3px); /* Трохи розмиємо фон для краси */
-}
-
-.content {
-  background: white;
-  padding: 2.5rem 3.5rem;
-  border-radius: 12px;
+.contentContainer {
   text-align: center;
-  color: #333;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  min-width: 300px;
-  animation: popIn 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.title {
-  margin-top: 0;
+.titleWin {
   font-size: 2rem;
-  color: #333;
+  color: #2ecc71; 
+  margin: 0;
+}
+
+.titleLoss {
+  font-size: 2rem;
+  color: #e74c3c; 
+  margin: 0;
 }
 
 .wordText {
-  font-size: 1.1rem;
-  margin: 1rem 0 2rem;
-  color: #555;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.wordHighlight {
+  color: #3498db;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  margin-left: 8px;
 }
 
 .buttons {
   display: flex;
-  gap: 1rem;
   justify-content: center;
-}
-
-@keyframes popIn {
-  0% { transform: scale(0.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  gap: 1rem;
+  margin-top: 1rem;
 }

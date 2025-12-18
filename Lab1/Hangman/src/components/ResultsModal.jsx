@@ -1,21 +1,18 @@
 import React from 'react';
-import { createPortal } from 'react-dom';
+import Modal from './ui/Modal';
 import styles from './ResultsModal.module.css';
-import buttonStyles from '../styles/Button.module.css'; 
-
-const modalRoot = document.getElementById('modal-root');
+import buttonStyles from '../styles/Button.module.css';
 
 const ResultsModal = ({ isWin, wordToGuess, onPlayAgain, onGoToMenu }) => {
-  
-  const content = (
-    <div className={styles.overlay}>
-      <div className={styles.content}>
-        <h1 className={styles.title}>
+  return (
+    <Modal isOpen={true} onClose={onGoToMenu}>
+      <div className={styles.contentContainer}>
+        <h2 className={isWin ? styles.titleWin : styles.titleLoss}>
           {isWin ? 'YOU WON! 🎉' : 'GAME OVER 💀'}
-        </h1>
-        
+        </h2>
+
         <p className={styles.wordText}>
-          The correct word was: <strong>{wordToGuess}</strong>
+          The correct word was: <strong className={styles.wordHighlight}>{wordToGuess}</strong>
         </p>
 
         <div className={styles.buttons}>
@@ -26,12 +23,9 @@ const ResultsModal = ({ isWin, wordToGuess, onPlayAgain, onGoToMenu }) => {
             Main Menu
           </button>
         </div>
-
       </div>
-    </div>
+    </Modal>
   );
-
-  return createPortal(content, modalRoot);
 };
 
 export default ResultsModal;
