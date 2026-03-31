@@ -4,9 +4,23 @@ import HangmanVisual from '../components/HangmanVisual';
 import pageStyles from './StartPage.module.css';
 import buttonStyles from '../styles/Button.module.css';
 
+/**
+ * The Start Page component.
+ * Renders the initial screen of the Hangman game where users can enter their name 
+ * and navigate to the game, settings, or leaderboard.
+ * * @component
+ * @returns {JSX.Element} The rendered Start Page view.
+ */
+
 const StartPage = () => {
   const [userName, setUserName] = useState('');
   const navigate = useNavigate(); 
+
+  /**
+   * Handles the start game action.
+   * Validates the username input. If valid, navigates to the game page with the username.
+   * If empty, alerts the user to enter a name.
+   */
 
   const handleStartGame = () => {
     if (userName.trim()) {
@@ -16,6 +30,11 @@ const StartPage = () => {
     }
   };
 
+
+  /**
+   * Navigates the user to the Settings page.
+   */
+  
   const handleGoToSettings = () => {
     navigate('/settings');
   };
