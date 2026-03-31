@@ -2,12 +2,15 @@
   "name": "hangman",
   "private": true,
   "version": "0.0.0",
+  "license": "MIT",
+  "author": "Sofiia Kotiuk",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "license-check": "license-checker > license-report.txt"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -27,6 +30,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.22",
     "globals": "^16.4.0",
+    "license-checker": "^25.0.1",
     "vite": "^7.1.7"
   }
 }
