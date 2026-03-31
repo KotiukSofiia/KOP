@@ -7,6 +7,13 @@ import styles from './App.module.css';
 import LeaderboardPage from './pages/LeaderboardPage';
 import CookieConsent from "react-cookie-consent";
 
+/**
+ * Головний компонент додатку Hangman.
+ * Відповідає за маршрутизацію (роутинг) сторінок гри та відображення GDPR Cookie банера.
+ * * @component
+ * @returns {JSX.Element} Повертає відрендерений додаток з маршрутами.
+ */
+
 function App() {
 
   const handleAcceptCookie = () => {

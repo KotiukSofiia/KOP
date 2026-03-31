@@ -4,6 +4,12 @@ import styles from './LeaderboardPage.module.css';
 import buttonStyles from '../styles/Button.module.css';
 import { useResultsStore } from '../store/results/useResultsStore';
 
+/**
+ * The Leaderboard Page component.
+ * Retrieves the game history from the Zustand results store and displays it in a table.
+ * * @component
+ * @returns {JSX.Element} The rendered leaderboard table and controls.
+ */
 const LeaderboardPage = () => {
   const navigate = useNavigate();
   const history = useResultsStore((state) => state.history);

@@ -7,13 +7,24 @@ import styles from './SettingsPage.module.css';
 import buttonStyles from '../styles/Button.module.css';
 import { useSettingsStore } from '../store/settings/useSettingsStore';
 
+/**
+ * The Settings Page component.
+ * Allows the user to configure global game settings, such as difficulty.
+ * Uses react-hook-form and yup for validation, and Zustand for state management.
+ * * @component
+ * @returns {JSX.Element} The rendered settings form.
+ */
 const SettingsPage = () => {
   const navigate = useNavigate();
   const { difficulty, setDifficulty } = useSettingsStore();
 
-const schema = yup.object().shape({
-  difficulty: yup.string().oneOf(['easy', 'hard']).required(),
-});
+  /**
+   * Validation schema for the settings form.
+   * @type {yup.ObjectSchema}
+   */
+  const schema = yup.object().shape({
+    difficulty: yup.string().oneOf(['easy', 'hard']).required(),
+  });
 
   const {
     register,
@@ -24,6 +35,12 @@ const schema = yup.object().shape({
     defaultValues: { difficulty },
   });
 
+  /**
+   * Handles the submission of the settings form.
+   * Updates the global difficulty state and redirects to the main menu.
+   * * @param {Object} data - The validated form data.
+   * @param {string} data.difficulty - The selected difficulty level.
+   */
   const onSubmit = (data) => {
     setDifficulty(data.difficulty);
     navigate('/');
